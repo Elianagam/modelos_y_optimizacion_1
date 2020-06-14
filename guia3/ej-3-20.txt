@@ -1,0 +1,63 @@
+#Ejercicio 3.20
+/* Declaración de variables */
+var A >= 0; var YC >= 0, binary;
+
+var T >= 0;
+var TRA1 >= 0;
+var TRB1 >= 0; var TRB2 >= 0;
+var TA1 >= 0; var TA2 >= 0; var TA3 >= 0;
+
+var YRA >= 0, binary;
+var YRB >= 0, binary;
+var ORA1 >= 0;
+var ORB1 >= 0; var ORB2 >= 0;
+
+/* Constantes */
+param PAVION := 13000000; 
+param INDEMNIZACION := 1000000; 
+param REPA := 150000000; param COSTORA := 70000000; 
+param REPB := 250000000; param COSTORB := 100000000; 
+param MONTAJE := 15000000;
+param TURBINA := 2000000;
+
+param HHT := 24000;
+
+param m := 0.1; param M := 100;
+
+/* Definición del funcional */
+maximize z: A*PAVION - YC*INDEMNIZACION + YRA*(REPA - COSTORA - MONTAJE) + YRB*(REPB - COSTORB - MONTAJE) - T*TURBINA;
+
+/* Restricciones */
+/* Turbinas armadas */
+s.t. e1: HHT*(TA1 + TRA1 + TRB1) <= 48000 * 3;
+s.t. e2: HHT*(TA2+ TRB2) <= 48000 * 6;
+s.t. e3: HHT*TA3 <= 48000 * 3;
+
+/* Cierra la planta */
+s.t. e8: 5*(1-YC) <= A;
+s.t. e15: A <= M*(1-YC);
+
+/* Turbinas por avion */
+s.t. e4: 4*A = TA1 + TA2 + TA3;
+
+/* Horas hombre fuselaje */
+s.t. e5: 48000 * TA1 <= 40000 * 3 * 4;
+s.t. e6: 48000 * TA2 <= 40000 * 6 * 4;
+s.t. e7: 48000 * TA3 <= 40000 * 3 * 4;
+
+/* Obra civil */
+s.t. e9: 800 = ORA1 + ORB1;
+s.t. e10: YRA * 50000 <= ORA1 * 90;
+s.t. e11: YRB * 80000 <= ORB1 * 90 + ORB2 * 120;
+
+/* Turbinas represas */
+s.t. e13: YRA * 8 = TRA1;
+s.t. e14: YRB * 10 = TRB1 + TRB2;
+
+/* Total turbinas*/
+s.t. e12: T = TA1 + TA2 + TA3 + TRA1 + TRB1 + TRB2;
+
+
+
+
+
